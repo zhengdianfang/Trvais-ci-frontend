@@ -8,7 +8,7 @@
       align="middle"
       justify="center"
     >
-      <span class="Login_Title">Welcome ACCA</span>
+      <span class="Login_Title">Welcome ACA</span>
     </el-row>
 
     <el-row
@@ -50,7 +50,8 @@ export default {
       if (_.isEmpty(this.token)) {
         alert("请输入Travis-ci token");
       } else {
-        this.loginToken = this.token;
+        localStorage.setItem("travisToken", this.token);
+        this.$router.push({ path: '/repoList' });
       }
     }
   }
