@@ -6,6 +6,7 @@
       <el-breadcrumb-item>build-list</el-breadcrumb-item>
     </el-breadcrumb>
     <el-table
+      v-loading="loading"
       :data="buildList"
       style="width: 100%;marginTop: 32px"
       height="600"
@@ -55,13 +56,19 @@
 import { mapState, mapActions } from 'vuex'
 
 export default {
+  data() {
+    return {
+      loading: true,
+    }
+  },
   computed: mapState({
     buildList(state) {
       return state.buildMap[this.$route.params.id] || [];
     }
   }),
   created() {
-    this.requestBuildListByRepoId(this.$route.params.id);
+    this.requestBuildListByRepoId(this.$route.params.id)
+      .then(() => this.loading = false);
   },
   methods: {
     ...mapActions(['requestBuildListByRepoId']),

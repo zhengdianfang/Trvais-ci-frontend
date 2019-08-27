@@ -5,6 +5,7 @@
       <el-breadcrumb-item>repo-list</el-breadcrumb-item>
     </el-breadcrumb>
     <el-table
+      v-loading="loading"
       :data="repoList"
       style="width: 100%;marginTop: 32px"
       height="600"
@@ -29,9 +30,14 @@
 import { mapState, mapActions } from 'vuex'
 
 export default {
+  data() {
+    return {
+      loading: true,
+    }
+  },
   computed: mapState(['repoList']),
   created() {
-    this.requestRepoList();
+    this.requestRepoList().then(() => this.loading = false);
   },
   methods: {
     ...mapActions(['requestRepoList']),

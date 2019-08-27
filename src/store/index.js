@@ -34,39 +34,32 @@ export default new Vuex.Store({
         }
     },
     actions: {
-        requestRepoList({ commit }) {
-            get("https://api.travis-ci.org/repos")
-                .then(response => {
-                    response.json().then(json => {
-                        const repoData = _.chain(json)
-                            .get("repositories")
-                            .filter(elem => elem.active)
-                            .map(elem => ({ name: elem.slug, branch: elem.default_branch.name, id: elem.id }))
-                            .value()
-                        commit('updateRepoList', repoData);
-                    })
-                }).catch(_.noop)
+        async requestRepoList({ commit }) {
+            const response = await get("https://api.travis-ci.org/repos");
+            const json = await response.json();
+            const repoData = _.chain(json)
+                .get("repositories")
+                .filter(elem => elem.active)
+                .map(elem => ({ name: elem.slug, branch: elem.default_branch.name, id: elem.id }))
+                .value()
+            commit('updateRepoList', repoData);
         },
-        requestBuildListByRepoId({ commit }, id) {
-            get(`https://api.travis-ci.org/repo/${id}/builds`)
-                .then(response => {
-                    response.json().then(json => {
-                        const buildList = _.chain(json)
-                            .get("builds")
-                            .map(elem => ({
-                                number: `#${elem.number}`,
-                                branch: elem.branch.name,
-                                id: elem.id,
-                                state: elem.state,
-                                duration: transalteDuration(elem.duration),
-                                startTime: moment(elem.started_at).format("ll"),
-                                createUser: elem.created_by.login
-                            }))
-                            .value()
-                        commit('putBuildList', { id, buildList })
-                    })
-                })
-                .catch(_.noop)
+        async requestBuildListByRepoId({ commit }, id) {
+            const response = await get(`https://api.travis-ci.org/repo/${id}/builds`);
+            const json = await response.json();
+            const buildList = _.chain(json)
+                .get("builds")
+                .map(elem => ({
+                    number: `#${elem.number}`,
+                    branch: elem.branch.name,
+                    id: elem.id,
+                    state: elem.state,
+                    duration: transalteDuration(elem.duration),
+                    startTime: moment(elem.started_at).format("ll"),
+                    createUser: elem.created_by.login
+                }))
+                .value()
+            commit('putBuildList', { id, buildList })
         }
     }
 });
