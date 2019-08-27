@@ -51,7 +51,7 @@ export default {
         alert("请输入Travis-ci token");
       } else {
         localStorage.setItem("travisToken", this.token);
-        this.$router.push({ path: '/repoList' });
+        this.$router.push({ path: '/repo-list' });
       }
     }
   }

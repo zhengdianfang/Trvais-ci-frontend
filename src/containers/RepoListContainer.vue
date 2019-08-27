@@ -1,8 +1,12 @@
 <template>
   <div style="width: 80%">
+    <el-breadcrumb separator="/">
+      <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+      <el-breadcrumb-item>repo-list</el-breadcrumb-item>
+    </el-breadcrumb>
     <el-table
       :data="repoList"
-      style="width: 100%"
+      style="width: 100%;marginTop: 32px"
       height="600"
       @row-click="clickRow"
       row-class-name="RepoList-Table-Row"
@@ -22,34 +26,17 @@
   </div>
 </template>
 <script>
-import { get } from '../api';
-import _ from 'lodash';
+import { mapState, mapActions } from 'vuex'
 
 export default {
-  data() {
-    return {
-      repoList: [],
-    }
-  },
+  computed: mapState(['repoList']),
   created() {
     this.requestRepoList();
   },
   methods: {
-    requestRepoList() {
-      get("https://api.travis-ci.org/repos")
-        .then(response => {
-          response.json().then(json => {
-            const repoData = _.chain(json)
-              .get("repositories")
-              .map(elem => ({ name: elem.name, branch: elem.default_branch.name, id: elem.id }))
-            this.repoList.splice(0, this.repoList.length);
-            this.repoList.push(...repoData)
-          })
-        })
-        .catch(_.noop)
-    },
-    clickRow(row, event, column) {
-      console.log(row.id);
+    ...mapActions(['requestRepoList']),
+    clickRow(row) {
+      this.$router.push({ path: `/build-list/${row.id}` });
     }
   }
 } 
