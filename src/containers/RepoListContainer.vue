@@ -1,9 +1,19 @@
 <template>
   <div style="width: 80%">
-    <el-breadcrumb separator="/">
-      <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item>repo-list</el-breadcrumb-item>
-    </el-breadcrumb>
+    <el-row
+      type="flex"
+      align="middle"
+      justify="space-between"
+    >
+      <el-breadcrumb separator="/">
+        <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+        <el-breadcrumb-item>repo-list</el-breadcrumb-item>
+      </el-breadcrumb>
+      <el-button
+        type="primary"
+        @click="navigateToChart"
+      >统计</el-button>
+    </el-row>
     <el-table
       v-loading="loading"
       :data="repoList"
@@ -43,6 +53,9 @@ export default {
     ...mapActions(['requestRepoList']),
     clickRow(row) {
       this.$router.push({ path: `/build-list/${row.id}` });
+    },
+    navigateToChart() {
+      this.$router.push({ path: `/chart` });
     }
   }
 } 

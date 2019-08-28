@@ -1,8 +1,13 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import moment from 'moment';
+import VuexPersistence from 'vuex-persist';
 import _ from 'lodash';
 import { get } from '../api';
+
+const vuexLocal = new VuexPersistence({
+    storage: window.localStorage
+});
 
 Vue.use(Vuex);
 
@@ -61,5 +66,6 @@ export default new Vuex.Store({
                 .value()
             commit('putBuildList', { id, buildList })
         }
-    }
+    },
+    plugins: [vuexLocal.plugin]
 });
