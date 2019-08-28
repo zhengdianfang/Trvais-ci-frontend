@@ -4,7 +4,7 @@
     :width="400"
     :labels="labels"
     :chartData="chartData"
-    title="构建总数"
+    title="构建平均时长"
   />
 </template>
 <script>
@@ -15,7 +15,16 @@ import _ from 'lodash';
 export default {
   computed: mapState({
     labels: state => _.map(state.repoList, elem => elem.name),
-    chartData: state => _.map(state.repoList, elem => _.chain(state.buildMap).get(elem.id).size().value()),
+    chartData: state =>
+      _.chain(state.repoList)
+        .map(repo => {
+          const totalDuration = _.chain(state.buildMap)
+            .get(repo.id)
+            .reduce((sum, elem) => sum + elem.duration, 0)
+            .value()
+          return totalDuration / _.size(_.get(state.buildMap, repo.id));
+        }).value(),
+
   }),
   components: {
     Chart,

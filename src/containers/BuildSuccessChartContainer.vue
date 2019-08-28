@@ -4,7 +4,7 @@
     :width="400"
     :labels="labels"
     :chartData="chartData"
-    title="构建总数"
+    title="构建成功率"
   />
 </template>
 <script>
@@ -15,7 +15,17 @@ import _ from 'lodash';
 export default {
   computed: mapState({
     labels: state => _.map(state.repoList, elem => elem.name),
-    chartData: state => _.map(state.repoList, elem => _.chain(state.buildMap).get(elem.id).size().value()),
+    chartData: state =>
+      _.chain(state.repoList)
+        .map(repo => {
+          const passedCount = _.chain(state.buildMap)
+            .get(repo.id)
+            .filter(elem => elem.state === 'passed')
+            .size()
+            .value()
+          return passedCount / _.size(_.get(state.buildMap, repo.id)) * 100;
+        }).value(),
+
   }),
   components: {
     Chart,

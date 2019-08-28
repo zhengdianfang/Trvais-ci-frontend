@@ -54,6 +54,8 @@
 </template>
 <script>
 import { mapState, mapActions } from 'vuex'
+import _ from 'lodash';
+import { transalteDuration } from '../utils';
 
 export default {
   data() {
@@ -63,7 +65,10 @@ export default {
   },
   computed: mapState({
     buildList(state) {
-      return state.buildMap[this.$route.params.id] || [];
+      return _.map(state.buildMap[this.$route.params.id], elem => ({
+        ...elem,
+        duration: transalteDuration(elem.duration)
+      })) || [];
     }
   }),
   created() {

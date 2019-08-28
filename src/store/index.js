@@ -11,19 +11,6 @@ const vuexLocal = new VuexPersistence({
 
 Vue.use(Vuex);
 
-const transalteDuration = (duration) => {
-    var h = Math.floor(duration / 3600);
-    var m = Math.floor((duration / 60 % 60));
-    var s = Math.floor((duration % 60));
-    let durationStr = s + "s";
-    if (m > 0) {
-    durationStr = m + "m" + durationStr;
-    }
-    if (h > 0) {
-    durationStr = h + "H" + durationStr;
-    }
-    return durationStr;
-}
 
 export default new Vuex.Store({
     state: {
@@ -59,7 +46,7 @@ export default new Vuex.Store({
                     branch: elem.branch.name,
                     id: elem.id,
                     state: elem.state,
-                    duration: transalteDuration(elem.duration),
+                    duration: elem.duration,
                     startTime: moment(elem.started_at).format("ll"),
                     createUser: elem.created_by.login
                 }))
