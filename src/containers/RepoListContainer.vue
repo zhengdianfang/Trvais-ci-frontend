@@ -24,12 +24,12 @@
     >
       <el-table-column
         prop="name"
-        label="Name"
+        label="代码库名称"
       >
       </el-table-column>
       <el-table-column
         prop="branch"
-        label="Branch"
+        label="分支"
         width="180"
       >
       </el-table-column>

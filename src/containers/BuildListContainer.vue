@@ -15,37 +15,37 @@
     >
       <el-table-column
         prop="number"
-        label="Number"
+        label="构建号"
         width="180"
       >
       </el-table-column>
       <el-table-column
         prop="state"
-        label="State"
+        label="状态"
         width="180"
       >
       </el-table-column>
       <el-table-column
         prop="createUser"
-        label="CreateUser"
+        label="执行者"
         width="180"
       >
       </el-table-column>
       <el-table-column
         prop="duration"
-        label="Duration"
+        label="时长"
         width="180"
       >
       </el-table-column>
       <el-table-column
         prop="startTime"
-        label="StartTime"
+        label="开始时间"
         width="180"
       >
       </el-table-column>
       <el-table-column
         prop="branch"
-        label="Branch"
+        label="仓库分支"
         width="180"
       >
       </el-table-column>
