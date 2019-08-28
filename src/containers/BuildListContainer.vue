@@ -5,6 +5,18 @@
       <el-breadcrumb-item :to="{ path: '/repo-list'}">repo-list</el-breadcrumb-item>
       <el-breadcrumb-item>build-list</el-breadcrumb-item>
     </el-breadcrumb>
+    <el-row
+      type="flex"
+      style="marginTop: 32px"
+      align="middle"
+    >
+      <span class="RepoList-Label">构建总数: </span>
+      <span class="RepoList-Count">{{ buildList.length }}</span>
+      <span class="RepoList-Label">构建成功数: </span>
+      <span class="RepoList-Count_passed">{{ buildList.filter(elem => elem.state === 'passed').length }}</span>
+      <span class="RepoList-Label">构建失败数: </span>
+      <span class="RepoList-Count_error">{{ buildList.filter(elem => elem.state !== 'passed').length }}</span>
+    </el-row>
     <el-table
       v-loading="loading"
       :data="buildList"
@@ -63,14 +75,17 @@ export default {
       loading: true,
     }
   },
-  computed: mapState({
-    buildList(state) {
-      return _.map(state.buildMap[this.$route.params.id], elem => ({
-        ...elem,
-        duration: transalteDuration(elem.duration)
-      })) || [];
-    }
-  }),
+  computed: {
+    ...mapState({
+      buildList(state) {
+        return _.map(state.buildMap[this.$route.params.id], elem => ({
+          ...elem,
+          duration: transalteDuration(elem.duration)
+        })) || [];
+      }
+    })
+
+  },
   created() {
     this.requestBuildListByRepoId(this.$route.params.id)
       .then(() => this.loading = false);
@@ -94,5 +109,26 @@ export default {
 <style scoped>
 .RepoList-Table-Row {
   cursor: pointer;
+}
+.RepoList-Label {
+  font-size: 14px;
+  color: gray;
+  margin-left: 16px;
+}
+.RepoList-Count {
+  font-size: 18px;
+  color: gray;
+  margin-left: 8px;
+}
+.RepoList-Count_passed {
+  font-size: 18px;
+  color: green;
+  margin-left: 8px;
+}
+
+.RepoList-Count_error {
+  font-size: 18px;
+  color: red;
+  margin-left: 8px;
 }
 </style>
