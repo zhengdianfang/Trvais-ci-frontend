@@ -23,6 +23,20 @@
       ></el-input>
     </el-row>
     <el-row
+      justify="end"
+      align="middle"
+      style="marginTop: 16px"
+    >
+      <span class="Login-Token-Tip"><a
+          href="https://developer.travis-ci.com/authentication"
+          target="blank"
+        >如何获取token</a></span>
+      <i
+        class="el-icon-question"
+        style="color: #409eff"
+      ></i>
+    </el-row>
+    <el-row
       type="flex"
       align="middle"
       justify="center"
@@ -69,6 +83,12 @@ export default {
   margin-top: 16px;
 }
 .Login_Button {
+  margin-top: 16px;
+}
+.Login-Token-Tip {
+  font-size: 12px;
+  color: #409eff;
+  margin-right: 8px;
   margin-top: 16px;
 }
 </style>
