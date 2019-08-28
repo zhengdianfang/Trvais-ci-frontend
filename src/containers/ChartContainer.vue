@@ -25,6 +25,10 @@
         label="构建成功率"
         name="build-passed"
       ></el-tab-pane>
+      <el-tab-pane
+        label="平均恢复时长"
+        name="build-fix"
+      ></el-tab-pane>
     </el-tabs>
     <router-view></router-view>
   </div>
@@ -56,7 +60,11 @@ export default {
         this.$router.push({ path: `/chart/duration` });
       } else if (tab.name === 'build-passed') {
         this.$router.push({ path: `/chart/passed` });
+      } else if (tab.name === 'build-fix') {
+        this.$router.push({ path: `/chart/fix` });
       }
+
+
     }
   },
 }

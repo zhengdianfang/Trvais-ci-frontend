@@ -7,6 +7,7 @@ import ChartContainer from '../containers/ChartContainer';
 import BuildCountChartContainer from '../containers/BuildCountChartContainer';
 import BuildDurationChartContainer from '../containers/BuildDurationChartContainer';
 import BuildSuccessChartContainer from '../containers/BuildSuccessChartContainer';
+import BuildFailedFixDurationChartContainer from '../containers/BuildFailedFixDurationChartContainer';
 
 Vue.use(VueRouter);
 
@@ -21,6 +22,7 @@ const routes = [
             { path: '', component: BuildCountChartContainer },
             { path: 'duration', component: BuildDurationChartContainer },
             { path: 'passed', component: BuildSuccessChartContainer },
+            { path: 'fix', component: BuildFailedFixDurationChartContainer },
 
         ]
     },
