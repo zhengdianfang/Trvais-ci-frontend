@@ -48,6 +48,20 @@ export default {
     'repoList',
   ]),
   mounted() {
+    switch (_.last(this.$route.path.split('/'))) {
+      case "":
+        this.activeName = "build-count";
+        break;
+      case "duration":
+        this.activeName = "build-duration";
+        break;
+      case "passed":
+        this.activeName = "build-passed";
+        break;
+      case "fix":
+        this.activeName = "build-fix";
+        break;
+    }
     Promise.all(_.map(this.repoList, repo => this.requestBuildListByRepoId(repo.id)))
       .then(() => this.loading = false)
   },

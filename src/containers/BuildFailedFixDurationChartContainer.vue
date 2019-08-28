@@ -32,7 +32,7 @@ export default {
         const nextElem = _.get(buildList, index + 1);
         if (nextElem) {
           if (elem.state === 'passed' && nextElem !== 'passed') {
-            const duration = moment(elem.endTime).diff(nextElem.endTime, 'second');
+            const duration = moment(elem.endTime).diff(nextElem.endTime, 'minutes');
             durationSum += duration;
             ++count;
           }

@@ -47,7 +47,7 @@ export default new Vuex.Store({
                     id: elem.id,
                     state: elem.state,
                     duration: elem.duration,
-                    startTime: moment(elem.started_at).format("ll"),
+                    startTime: moment(elem.started_at).format("YYYY-MM-DD HH:mm:ss"),
                     endTime: elem.finished_at,
                     createUser: elem.created_by.login
                 }))
