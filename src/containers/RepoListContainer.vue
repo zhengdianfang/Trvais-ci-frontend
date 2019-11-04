@@ -14,6 +14,13 @@
         @click="navigateToChart"
       >统计</el-button>
     </el-row>
+    <el-row style="marginTop: 32px">
+	<el-input
+	    placeholder="请输入内容"
+	    prefix-icon="el-icon-search"
+	    v-model="searchText">
+	</el-input>
+    </el-row>
     <el-table
       v-loading="loading"
       :data="repoList"
@@ -38,14 +45,20 @@
 </template>
 <script>
 import { mapState, mapActions } from 'vuex'
+import _ from 'lodash'
 
 export default {
   data() {
     return {
       loading: true,
+      searchText: '',
     }
   },
-  computed: mapState(['repoList']),
+  computed: mapState({
+	  repoList(state) {
+	    return _.filter(state.repoList, elem => elem.name.startsWith(this.searchText)); 
+	  }
+  }),
   created() {
     this.requestRepoList().then(() => this.loading = false);
   },
